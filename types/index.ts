@@ -28,6 +28,10 @@ type Product = {
     price: number;
     available_colors:null | string[];
     available_sizes:null | string[];
+    size?: string;
+    color?: string;
+    total_price?: number;
+    quantity?: number;
 }
 
 type ImageUploaderProps = {

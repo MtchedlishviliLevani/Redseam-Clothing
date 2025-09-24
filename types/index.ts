@@ -94,4 +94,23 @@ type ModalProps  ={
   onClose: () => void;
   children: ReactNode;
 }
-export type { ButtonProps,RegisterFormValues,Product,ImageUploaderProps,InputProps,ListingClientProps, ProductDetailInfo,ModalProps }
+
+
+type CheckoutFormValues = {
+  name: string;
+  surname: string;
+  email: string;
+  address: string;
+  zip_code: string;
+};
+
+
+
+type PaginationProps = {
+  currentPage: number
+  totalPages: number
+  links?: { first?: string | null; last?: string | null; prev?: string | null; next?: string | null }
+}
+
+
+export type { ButtonProps,RegisterFormValues,Product,ImageUploaderProps,InputProps,ListingClientProps, ProductDetailInfo,ModalProps,CheckoutFormValues, PaginationProps}

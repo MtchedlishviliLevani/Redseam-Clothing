@@ -1,15 +1,9 @@
 "use client"
-
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import arrowIcon from "@/features/shared/assets/arrowDownIcon.svg"
-
-type PaginationProps = {
-  currentPage: number
-  totalPages: number
-  links?: { first?: string | null; last?: string | null; prev?: string | null; next?: string | null }
-}
+import { PaginationProps } from "@/types"
 
 function Pagination({ currentPage, totalPages, links }: PaginationProps) {
   const searchParams = useSearchParams()
@@ -17,7 +11,6 @@ function Pagination({ currentPage, totalPages, links }: PaginationProps) {
   const hasNext = Boolean(links?.next) || currentPage < totalPages
 
   const buildPageHref = (page: number) => {
-    // Preserve all current search parameters and only update the page
     const params = new URLSearchParams(searchParams.toString())
     params.set("page", String(page))
     return `?${params.toString()}`

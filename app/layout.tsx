@@ -28,11 +28,12 @@ export default function RootLayout({
       >
         <div className="w-[1980px] m-auto px-[130px]">
         <Header />
-        <div className="mt-18">
         <CartModalWrapper/>
+       
           {children}
+          
 </div>
-</div>
+
       </body>
     </html>
   );

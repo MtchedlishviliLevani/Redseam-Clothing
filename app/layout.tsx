@@ -26,9 +26,12 @@ export default function RootLayout({
       <body
         className={` ${poppins.variable}  antialiased font-poppins`}
       >
+        <div className="w-[1980px] m-auto px-[130px]">
         <Header />
         <CartModalWrapper/>
           {children}
+</div>
+
       </body>
     </html>
   );

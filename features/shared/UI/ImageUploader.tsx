@@ -90,7 +90,7 @@ const errorMessage = fieldError?.message;
                     alt="Uploaded Preview"
                     width={100}
                     height={100}
-                    className="rounded-full cursor-pointer"
+                    className="rounded-full cursor-pointer w-[100px] h-[100px] "
                     onClick={handleUploadClick}
                 />
             ) : (

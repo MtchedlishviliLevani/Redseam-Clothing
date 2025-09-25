@@ -57,7 +57,7 @@ function Order() {
   };
 
   return (
-    <div className="px-[130px]">
+    <div className="px-[100px]">
        <div className="mt-18">
       <h1 className="text-[#10151f] font-semibold text-[42px] mb-[42px]">Checkout</h1>
 

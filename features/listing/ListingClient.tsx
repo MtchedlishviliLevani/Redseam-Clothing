@@ -22,12 +22,8 @@ export default function ListingClient({ product, currentPage, totalPages }: List
     const currentSort = searchParams.get("sort") || ""
     const currentSortLabel = sortOptions.find(option => option.value === currentSort)?.label || "Sort by";
 
-
-  
-    
-
     return (
-        <>
+        <div className="px-[100px]">
             <div className="mt-18">
                 <div className="flex items-center justify-between">
                     <h1 className="text-[#10151f] text-[42px] font-semibold">Products</h1>
@@ -86,6 +82,6 @@ export default function ListingClient({ product, currentPage, totalPages }: List
 
                 <Pagination currentPage={currentPage} totalPages={totalPages} links={product?.links} />
             </div>
-        </>
+        </div>
     )
 }

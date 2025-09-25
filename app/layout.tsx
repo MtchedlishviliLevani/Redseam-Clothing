@@ -6,9 +6,9 @@ import Header from "@/features/shared/UI/Header";
 
 const poppins = Poppins({
   variable: "--font-poppins",
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -23,17 +23,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={` ${poppins.variable}  antialiased font-poppins`}
-      >
-        <div className="w-[1980px] m-auto px-[130px]">
-        <Header />
-        <CartModalWrapper/>
-       
-          {children}
-          
-</div>
+      <body className={` ${poppins.variable}  antialiased font-poppins`}>
+        <div className="w-[1920px] m-auto">
+          <div className="px-[100px]">
+            <Header />
+          </div>
 
+          <CartModalWrapper />
+
+          {children}
+        </div>
       </body>
     </html>
   );

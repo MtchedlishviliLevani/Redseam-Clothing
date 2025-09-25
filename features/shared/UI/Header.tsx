@@ -19,12 +19,13 @@ function Header() {
 
   const showIcon = showIconRoutes.includes(pathname) || isListingInner;
 
-  function handleOpenCart() {
-    // if(!isLogged) return;
-    openCart();
-  }
+ 
 
   const openCart = useCartStore((state) => state.openCartModal);
+
+   function handleOpenCart() {
+    openCart();
+  }
   return (
     <header className="py-[30px] flex justify-between items-center">
       <Link href={"/listing"}><Image src={logo} alt="logo" width={180} height={24} /></Link>
@@ -42,6 +43,7 @@ function Header() {
         ) : (
           <Link href={"/login"} className="flex items-center gap-2">
             <Image src={userIcon} alt="user icon" width={15} height={15} />
+            <span className="text-[12px] text-[#10151f]">Log in</span>
           </Link>
         )}
       </div>

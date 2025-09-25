@@ -63,7 +63,7 @@ export default function RegisterForm() {
     <FormProvider {...methods}>
       <form
         autoComplete="off"
-        className="w-[50%] space-y-12"
+        className="w-[554px] space-y-12"
         onSubmit={methods.handleSubmit(onSubmit)}
         noValidate
       >

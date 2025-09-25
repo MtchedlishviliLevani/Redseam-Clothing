@@ -113,4 +113,19 @@ type PaginationProps = {
 }
 
 
-export type { ButtonProps,RegisterFormValues,Product,ImageUploaderProps,InputProps,ListingClientProps, ProductDetailInfo,ModalProps,CheckoutFormValues, PaginationProps}
+type SelectedTagProps = {
+    label: string;
+    onRemove: () => void;
+};
+
+
+type OrderSideBarProps = {
+  totalPrice: number;
+};
+
+type SortModalProps = {
+    isOpen: boolean
+    onClose: () => void
+}
+
+export type { ButtonProps,RegisterFormValues,Product,ImageUploaderProps,InputProps,ListingClientProps, ProductDetailInfo,ModalProps,CheckoutFormValues, PaginationProps,SelectedTagProps,OrderSideBarProps,SortModalProps}

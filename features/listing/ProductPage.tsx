@@ -59,6 +59,7 @@ function ProductPage({
   }
 
   return (
+    <div className="px-[130px]">
     <div className="mt-18">
       <h3 className="text-[#10151f] text-[14px]">Listing / Product</h3>
       <div className="flex gap-[168px] mt-[49px]">
@@ -70,7 +71,7 @@ function ProductPage({
                 src={image}
                 width={121}
                 height={161}
-                className="w-[121px] h-[161px] cursor-pointer shadow-md rounded-[6px]"
+                className={` ${coverImage===image?"border-[#ff4000] border":""} w-[121px] h-[161px] cursor-pointer shadow-md rounded-[6px]`}
                 alt="img"
                 onClick={() => {
                   setCoverImage(image);
@@ -206,6 +207,7 @@ function ProductPage({
           <BrandContent productDetails={productDetails} />
         </div>
       </div>
+    </div>
     </div>
   );
 }

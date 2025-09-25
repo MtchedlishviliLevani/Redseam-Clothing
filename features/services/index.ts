@@ -128,11 +128,18 @@ export async function getCartItems(token:string){
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
     });
-    if (!res.ok) throw new Error("Cart items fetch failed");
+    if (!res.ok) {
+      let details: unknown = undefined
+      try {
+        details = await res.json()
+      } catch {}
+      const statusText = `${res.status} ${res.statusText}`
+      throw new Error(`Cart items fetch failed (${statusText})${details ? `: ${JSON.stringify(details)}` : ''}`)
+    }
     const result = await res.json();
     return result;
   } catch (err: unknown) {
@@ -191,6 +198,7 @@ export async function deleteCartItem(token: string, id: number,data:{color:strin
       method: "DELETE",
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body:JSON.stringify(data)

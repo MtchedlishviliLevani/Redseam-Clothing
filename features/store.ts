@@ -45,7 +45,8 @@ export const useCartStore = create<Cart>((set,get) => ({
     fetchCart: async (token: string) => {
     try {
       const response = await getCartItems(token);
-      set({ cartItems: response });
+      const items = Array.isArray(response) ? response : (response?.data ?? []);
+      set({ cartItems: items });
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }
@@ -65,7 +66,9 @@ increaseQuantity: async (token: string, id: number,color:string,size:string) => 
     }),
   }));
 
-  const item = get().cartItems.find((item) => item.id === id);
+  const item = get().cartItems.find(
+    (item) => item.id === id && item.color === color && item.size === size
+  );
   if (item) {
     try {
       await updateCartItemQuantity(

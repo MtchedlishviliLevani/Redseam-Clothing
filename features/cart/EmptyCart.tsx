@@ -4,9 +4,11 @@ import shoppingCartIcon from "@/features/shared/assets/shoppingCartIcon.svg"
 import closeIcon from "@/features/shared/assets/closeIcon.svg"
 interface EmptyCartProps{
 totalQuantity:number
-,closeCartModal:()=>void
+,redirectTo:(path:string)=>void,
+closeCartModal:()=>void
+
 }
-function EmptyCart({totalQuantity,closeCartModal}:EmptyCartProps) {
+function EmptyCart({totalQuantity,closeCartModal,redirectTo}:EmptyCartProps) {
   return (
          <div className="flex flex-col h-full">
         <div className="flex items-center justify-between">
@@ -24,7 +26,7 @@ function EmptyCart({totalQuantity,closeCartModal}:EmptyCartProps) {
             <h3 className="text-[#10151F]  font-semibold text-2xl mt-4 text-center">Ooops!</h3>
             <p className="text-[#3E424A] text-[14px] text-center">You’ve got nothing in your cart just yet...</p>
           </div>
-          <Button onClick={closeCartModal} className="py-[10px_!important] w-[214px]">Start Shopping</Button>
+          <Button onClick={()=>redirectTo("/listing")} className="py-[10px_!important] w-[214px]">Start Shopping</Button>
         </div>
       </div>
   )

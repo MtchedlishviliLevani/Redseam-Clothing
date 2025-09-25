@@ -42,7 +42,7 @@ function Cart() {
   }
 
 
-  if (totalQuantity === 0)return<EmptyCart totalQuantity={totalPrice} closeCartModal={closeCartModal}/>
+  if (totalQuantity === 0)return<EmptyCart totalQuantity={totalPrice} closeCartModal={closeCartModal} redirectTo={redirectTo}/>
 
 
 

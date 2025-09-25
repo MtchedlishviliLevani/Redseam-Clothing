@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import { useFormContext, FieldErrors } from "react-hook-form";
 import Image from "next/image";
@@ -34,7 +34,7 @@ export default function Input({
         type={effectiveType}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        className={`w-full px-4 py-2 border focus:outline-none transition-colors rounded-[8px] ${fieldError ? "border-red-500 focus:border-red-600" : "border-[#e1dfe1] focus:border-[#10151F]"
+        className={`w-full px-4 py-2 border focus:outline-none transition-colors rounded-[8px] ${fieldError ? "border-red-500 focus:border-red-600" : "border-[#e1dfe1] focus:border-[#FF4000]"
           }`}
        
       />

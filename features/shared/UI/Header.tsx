@@ -15,12 +15,9 @@ function Header() {
   const pathname = usePathname();
 
   const showIconRoutes = ["/listing", "/order"];
-  const isListingInner = pathname.startsWith("/listing/"); // inner listing
+  const isListingInner = pathname.startsWith("/listing/"); 
 
   const showIcon = showIconRoutes.includes(pathname) || isListingInner;
-
- 
-
   const openCart = useCartStore((state) => state.openCartModal);
 
    function handleOpenCart() {

@@ -1,9 +1,5 @@
 import { ReactNode } from "react"
 
-// =============================
-// Domain models (Products/Brand)
-// =============================
-
 /** Brand information used across product views */
 type Brand = {
   id: number;
@@ -47,14 +43,7 @@ type ProductDetailInfo = {
 // =============================
 
 /** Generic button props shared by UI buttons */
-type ButtonProps = {
-  children: ReactNode
-  icon?: ReactNode
-  src?: ReactNode
-  onClick?: React.MouseEventHandler<HTMLButtonElement>
-  disabled?: boolean
-  className?: string
-}
+
 
 /** Input component props (forms) */
 type InputProps = {
@@ -64,6 +53,12 @@ type InputProps = {
   required?: boolean;
   className?: string;
   rules?: Record<string, unknown>;
+}
+type OrderInputProps = {
+  type: string
+  placeholder: string
+  value: string
+  onChange: (value: string) => void
 }
 
 /** Image uploader control props */
@@ -170,8 +165,8 @@ export type {
   Product,
   ProductDetailInfo,
   // UI shared
-  ButtonProps,
   InputProps,
+  OrderInputProps,
   ImageUploaderProps,
   ModalProps,
   // Auth/Register

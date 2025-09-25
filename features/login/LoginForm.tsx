@@ -90,7 +90,7 @@ export default function LoginForm() {
             </Button>
             <div className="flex gap-2 text-[14px] m-auto justify-center">
               <span className="text-[#3e424a]">Not a member?</span>
-              <Link href="/register" className="text-[#ff4000]">
+              <Link href="/register" className="text-[#ff4000] font-medium">
                 Register
               </Link>
             </div>

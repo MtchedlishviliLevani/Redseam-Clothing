@@ -132,7 +132,7 @@ export default function RegisterForm() {
             </Button>
             <div className="flex gap-2 text-[14px] m-auto justify-center">
               <span className="text-[#3e424a]">Already member?</span>
-              <a href="/login" className="text-[#ff4000]">
+              <a href="/login" className="text-[#ff4000] font-medium">
                 Login
               </a>
             </div>

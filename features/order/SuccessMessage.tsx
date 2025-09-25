@@ -10,7 +10,7 @@ function SuccessMessage({ onContinue }: SuccessMessageProps) {
       <div onClick={onContinue} className="absolute inset-0 bg-black/50"></div>
       <div onClick={(e) => e.stopPropagation()}
        className="relative bg-white w-[876] h-[590px] rounded-2xl p-[30px]  gap-[74px]  z-10 ">
-<Image onClick={onContinue} src={closeIcon} width={40} height={40} className="ml-auto" alt="Close Icon" />
+<Image onClick={onContinue} src={closeIcon} width={40} height={40} className="ml-auto cursor-pointer" alt="Close Icon" />
 
 <div className="flex flex-col gap-[74px]">
         <div className="space-y-10 flex flex-col items-center">

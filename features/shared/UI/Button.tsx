@@ -3,8 +3,8 @@ import { StaticImageData } from 'next/image';
 import { ReactNode } from 'react';
 interface ButtonProps {
   children: ReactNode;
-  icon?: StaticImageData; // for imported images
-  src?: string; // fallback text instead of icon
+  icon?: StaticImageData; 
+  src?: string; 
   onClick?: ()=>void;
   disabled?: boolean;
   className?: string;

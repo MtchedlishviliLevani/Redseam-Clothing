@@ -16,35 +16,90 @@ function Pagination({ currentPage, totalPages, links }: PaginationProps) {
     return `?${params.toString()}`
   }
 
-  const prevHref = links?.prev ? buildPageHref(Math.max(1, currentPage - 1)) : buildPageHref(Math.max(1, currentPage - 1))
-  const nextHref = links?.next ? buildPageHref(Math.min(totalPages, currentPage + 1)) : buildPageHref(Math.min(totalPages, currentPage + 1))
+  const prevHref = buildPageHref(Math.max(1, currentPage - 1))
+  const nextHref = buildPageHref(Math.min(totalPages, currentPage + 1))
 
-  // Create a small window of page buttons around current page
-  const visiblePages: number[] = []
-  const start = Math.max(1, currentPage - 2)
-  const end = Math.min(totalPages, currentPage + 2)
-  for (let p = start; p <= end; p++) visiblePages.push(p)
+  const visiblePages: (number | "...")[] = []
+
+  if (totalPages <= 6) {
+    for (let i = 1; i <= totalPages; i++) visiblePages.push(i)
+  } else {
+    if (currentPage === 1) {
+      visiblePages.push(1, 2, "...", totalPages - 1, totalPages)
+    } else if (currentPage === 2) {
+      visiblePages.push(1, 2, 3, "...", totalPages - 1, totalPages)
+    } else if (currentPage === 3) {
+      visiblePages.push(1, 2, 3, 4, "...", totalPages - 1, totalPages)
+    } else if (currentPage >= totalPages - 2) {
+      visiblePages.push(
+        1,
+        2,
+        "...",
+        totalPages - 2,
+        totalPages - 1,
+        totalPages
+      )
+    } else {
+      visiblePages.push(
+        1,
+        "...",
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        "...",
+        totalPages
+      )
+    }
+  }
 
   return (
     <div className="flex justify-center items-center gap-2 my-[58px]">
-      <Link href={hasPrev ? prevHref : "#"} aria-disabled={!hasPrev} className={!hasPrev ? "pointer-events-none opacity-40" : ""}>
-        <Image src={arrowIcon} alt="previous page" width={12} height={12} className="w-[12px] rotate-90  object-cover" />
+      <Link
+        href={hasPrev ? prevHref : "#"}
+        aria-disabled={!hasPrev}
+        className={!hasPrev ? "pointer-events-none opacity-40" : ""}
+      >
+        <Image
+          src={arrowIcon}
+          alt="previous page"
+          width={12}
+          height={12}
+          className="w-[12px] rotate-90 object-cover"
+        />
       </Link>
       <div className="flex items-center gap-2">
-        {visiblePages.map((p) => (
-          <Link key={p} href={buildPageHref(p)} className={p === currentPage ? "border-[#ff4000] border rounded-[4px] w-8 h-8 text-[#ff4000] flex items-center justify-center" : "w-8 h-8 text-[#212b36] cursor-pointer font-medium opacity-60 flex items-center justify-center"}>
-            {p}
-          </Link>
-        ))}
-        {end < totalPages && <span className="px-2">...</span>}
-        {end < totalPages && (
-          <Link href={buildPageHref(totalPages)} className="w-8 h-8 text-[#212b36] cursor-pointer font-medium opacity-60 flex items-center justify-center">
-            {totalPages}
-          </Link>
+        {visiblePages.map((p, idx) =>
+          p === "..." ? (
+            <span key={`dots-${idx}`} className="px-2">
+              ...
+            </span>
+          ) : (
+            <Link
+              key={p}
+              href={buildPageHref(p)}
+              className={
+                p === currentPage
+                  ? "border-[#ff4000] border rounded-[4px] w-8 h-8 text-[#ff4000] flex items-center justify-center"
+                  : "w-8 h-8 text-[#212b36] cursor-pointer font-medium opacity-60 flex items-center justify-center"
+              }
+            >
+              {p}
+            </Link>
+          )
         )}
       </div>
-      <Link href={hasNext ? nextHref : "#"} aria-disabled={!hasNext} className={!hasNext ? "pointer-events-none opacity-40" : ""}>
-        <Image src={arrowIcon} alt="next page" width={12} height={12} className="w-[12px] rotate-[270deg]  object-cover" />
+      <Link
+        href={hasNext ? nextHref : "#"}
+        aria-disabled={!hasNext}
+        className={!hasNext ? "pointer-events-none opacity-40" : ""}
+      >
+        <Image
+          src={arrowIcon}
+          alt="next page"
+          width={12}
+          height={12}
+          className="w-[12px] rotate-[270deg] object-cover"
+        />
       </Link>
     </div>
   )

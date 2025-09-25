@@ -39,7 +39,6 @@ function Order() {
     return acc + unitPrice * quantity;
   }, 0);
 
-  console.log(cartItems, "Orders")
 
    const formMethods = useForm<CheckoutFormValues>({
     defaultValues: {
@@ -73,7 +72,7 @@ function Order() {
         onSubmit={formMethods.handleSubmit(onSubmit)}
       >
         <OrderForm formMethods={formMethods} />
-        <OrderSidebar totalPrice={totalPrice} />
+      {cartItems?.length? <OrderSidebar totalPrice={totalPrice} />:<></>}
       </form>
 
       {isSuccess && <SuccessMessage onContinue={onContinue} />}

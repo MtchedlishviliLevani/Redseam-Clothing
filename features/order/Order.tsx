@@ -10,9 +10,15 @@ import OrderForm from "@/features/order/OrderForm";
 import OrderSidebar from "@/features/order/FormSideBar";
 
 function Order() {
+  const isLoggedIn = useAuthStore((store)=>store.isLogged);
+  const router = useRouter();
+    useEffect(() => {
+  if (!isLoggedIn) {
+    router.push("/listing");
+  }
+}, [isLoggedIn, router]);
   const user = useAuthStore((store) => store.user);
   const token = useAuthStore((state) => state.token);
-  const router = useRouter()
   const [isSuccess, setIsSuccess] = useState<boolean>(false)
 
   const onContinue = () => {
@@ -55,6 +61,7 @@ function Order() {
       setIsSuccess(false)
     }
   };
+
 
   return (
     <div className="px-[100px]">

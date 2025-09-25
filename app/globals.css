@@ -3,3 +3,15 @@
 @theme {
   --font-poppins: var(--font-poppins);
 }
+
+.custom_scroll::-webkit-scrollbar {
+  @apply w-2 h-2;
+}
+
+.custom_scroll::-webkit-scrollbar-thumb {
+  @apply bg-[#FF4000] rounded-full;
+}
+
+.custom_scroll::-webkit-scrollbar-track {
+  @apply bg-stone-200;
+}

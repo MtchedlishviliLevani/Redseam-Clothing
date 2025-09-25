@@ -1,5 +1,4 @@
 "use client"
-
 import { useState } from "react"
 import filterIcon from "@/features/shared/assets/filterIcon.svg"
 import arrowIcon from "@/features/shared/assets/arrowDownIcon.svg"
@@ -29,9 +28,7 @@ export default function ListingClient({ product, currentPage, totalPages }: List
 
     return (
         <>
-            <div className="">
-              
-
+            <div className="mt-18">
                 <div className="flex items-center justify-between">
                     <h1 className="text-[#10151f] text-[42px] font-semibold">Products</h1>
 
@@ -76,7 +73,7 @@ export default function ListingClient({ product, currentPage, totalPages }: List
                         {product?.data?.map((product: Product) => (
                             <div key={product.id}>
                               <Link href={`/listing/${product.id}`}>
-                                <Image src={product.cover_image} alt={product.name} width={100} height={100} className="w-full rounded-[10px] shadow-lg object-cover" />
+                                <Image src={product.cover_image} alt={product.name} width={100} height={100} className="w-full rounded-[10px] shadow-md shadow-gray-400 object-cover" />
                                 <div className="mt-3 space-y-[2px]">
                                     <h2 className="text-[#10151f] text-[18px] font-medium capitalize">{product.name}</h2>
                                     <p className="text-[#10151f] text-[16px] font-medium">$ {product.price}</p>

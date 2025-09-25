@@ -1,12 +1,7 @@
 "use client"
 
-import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-
-type SortModalProps = {
-    isOpen: boolean
-    onClose: () => void
-}
+import { SortModalProps } from "@/types"
 
 const sortOptions = [
     { value: "created_at", label: "New Product List" },
@@ -22,8 +17,6 @@ export default function SortModal({ isOpen, onClose }: SortModalProps) {
         const params = new URLSearchParams(searchParams.toString())
 
         params.set("sort", sortValue)
-
-        // Reset to page 1 when applying sort
         params.delete("page")
 
         router.push(`/listing?${params.toString()}`)

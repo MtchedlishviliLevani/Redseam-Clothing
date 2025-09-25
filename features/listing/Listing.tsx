@@ -7,7 +7,6 @@ async function Listing({ searchParams }: ListingProps) {
 
   const resolvedSearchParams = await searchParams;
   const { price_from, price_to, sort, page } = resolvedSearchParams || {};
-  console.log(resolvedSearchParams)
   const asString = (v: string | string[] | undefined) => Array.isArray(v) ? v[0] : v
   const asNumber = (v: string | undefined) => (typeof v !== "undefined" ? Number(v) : undefined)
   const product = await getProducts({

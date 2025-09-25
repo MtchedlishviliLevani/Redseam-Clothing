@@ -31,9 +31,9 @@ interface Cart{
     openCartModal: () => void;
     cartItems: Product[];
   fetchCart: (token: string) => Promise<void>;
-  increaseQuantity: (token:string,id: number) => Promise<void>;
-  decreaseQuantity: (token:string,id: number) => Promise<void>;
-  deleteItem: (token: string, id: number) => Promise<void>;
+  increaseQuantity: (token:string,id: number,color:string,size:string) => Promise<void>;
+  decreaseQuantity: (token:string,id: number,color:string,size:string) => Promise<void>;
+  deleteItem: (token: string, id: number,data:{color:string,size:string}) => Promise<void>;
   clearCart: () => void;
 }
 
@@ -51,67 +51,89 @@ export const useCartStore = create<Cart>((set,get) => ({
     }
   },
 
-  increaseQuantity: async (token:string, id: number) => {
-    set((state) => ({
-      cartItems: state.cartItems.map((item) => {
-        if (item.id !== id) return item;
-        const newQuantity = (item.quantity ?? 1) + 1;
-        const unitPrice = item.price ?? 0;
-        return {
-          ...item,
-          quantity: newQuantity,
-          total_price: unitPrice * newQuantity,
-        };
-      }),
-    }));
+increaseQuantity: async (token: string, id: number,color:string,size:string) => {
+  set((state) => ({
+    cartItems: state.cartItems.map((item) => {
+      if (item.id !== id ||item.color!==color||item.size!==size) return item;
+      const newQuantity = (item.quantity ?? 1) + 1;
+      const unitPrice = item.price ?? 0;
+      return {
+        ...item,
+        quantity: newQuantity,
+        total_price: unitPrice * newQuantity,
+      };
+    }),
+  }));
 
-    const item = get().cartItems.find((item) => item.id === id);
-    if (item) {
-      try {
-        await updateCartItemQuantity(token, { quantity: (item.quantity ?? 1) }, id);
-      } catch (err) {
-        console.error("Failed to update quantity in backend", err);
-      }
-    }
-  },
-
-  decreaseQuantity: async (token, id) => {
-    set((state) => ({
-      cartItems: state.cartItems.map((item) => {
-        if (item.id !== id) return item;
-        const currentQuantity = item.quantity ?? 1;
-        if (currentQuantity <= 1) return item;
-        const newQuantity = currentQuantity - 1;
-        const unitPrice = item.price ?? 0;
-        return {
-          ...item,
-          quantity: newQuantity,
-          total_price: unitPrice * newQuantity,
-        };
-      }),
-    }));
-
-    const item = get().cartItems.find((item) => item.id === id);
-    if (item) {
-      try {
-        await updateCartItemQuantity(token, { quantity: (item.quantity ?? 1) }, id);
-      } catch (err) {
-        console.error("Failed to update quantity in backend", err);
-      }
-    }
-  },
-
-
-  deleteItem: async (token, id) => {
+  const item = get().cartItems.find((item) => item.id === id);
+  if (item) {
     try {
-      await deleteCartItem(token, id);
-      set((state) => ({
-        cartItems: state.cartItems.filter((item) => item.id !== id),
-      }));
-    } catch (error) {
-      console.error("Failed to delete cart item:", error);
+      await updateCartItemQuantity(
+        token,
+        {
+          quantity: (item.quantity ?? 1),
+          color: color,
+          size: size
+        },
+        id
+      );
+    } catch (err) {
+      console.error("Failed to update quantity in backend", err);
     }
-  },
+  }
+},
+
+decreaseQuantity: async (token: string, id: number,color:string, size:string) => {
+  set((state) => ({
+    cartItems: state.cartItems.map((item) => {
+      if (item.id !== id||item.color!==color||item.size!==size) return item;
+      const currentQuantity = item.quantity ?? 1;
+      if (currentQuantity <= 1) return item;
+      const newQuantity = currentQuantity - 1;
+      const unitPrice = item.price ?? 0;
+      return {
+        ...item,
+        quantity: newQuantity,
+        total_price: unitPrice * newQuantity,
+      };
+    }),
+  }));
+
+  const item = get().cartItems.find(
+  (item) => item.id === id && item.color === color && item.size === size
+);
+  if (item) {
+    try {
+      await updateCartItemQuantity(
+        token,
+        {
+          quantity: (item.quantity ?? 1),
+          color: color,
+          size: size,
+        },
+        id
+      );
+    } catch (err) {
+      console.error("Failed to update quantity in backend", err);
+    }
+  }
+},
+
+
+
+  deleteItem: async (token, id, data: { color: string; size: string }) => {
+  try {
+    await deleteCartItem(token, id, data);
+    set((state) => ({
+      cartItems: state.cartItems.filter(
+        (item) => !(item.id === id && item.color === data.color && item.size === data.size)
+      ),
+    }));
+  } catch (error) {
+    console.error("Failed to delete cart item:", error);
+  }
+},
+
 
   clearCart: () => set({ cartItems: [] }),
 }));

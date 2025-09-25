@@ -16,7 +16,20 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
     const [priceFrom, setPriceFrom] = useState(searchParams.get("price_from") || "")
     const [priceTo, setPriceTo] = useState(searchParams.get("price_to") || "")
 
+    const [errorMessage,setErrorMessage]=useState<null |string>(null)
     const handleApplyFilters = () => {
+            // Convert to numbers
+    const fromNum = priceFrom ? Number(priceFrom) : 0;
+    const toNum = priceTo ? Number(priceTo) : Infinity;
+
+    // Validate
+    if (fromNum > toNum) {
+      setErrorMessage("Minimum price cannot be greater than maximum price");
+      return; // Stop applying filters
+    }
+
+    setErrorMessage(null); // Clear previous errors
+
         const params = new URLSearchParams(searchParams.toString())
 
         if (priceFrom) params.set("price_from", priceFrom)
@@ -30,7 +43,6 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
 
         router.push(`/listing?${params.toString()}`)
         onClose();
-
     }
 
     if (!isOpen) return null
@@ -54,7 +66,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                     className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-moz-appearance:textfield]  px-3 py-[10px] border border-gray-300 rounded-[8px] focus:outline-none focus:ring-1 focus:ring-[#ff4000] text-sm w-[175px]"
                 />
             </div>
-
+{errorMessage && <p className="text-red-500 text-sm mb-3">{errorMessage}</p>}
             <Button
                 onClick={handleApplyFilters}
                 className="ml-auto w-[121px] py-[9px_!important]"

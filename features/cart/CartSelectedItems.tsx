@@ -49,7 +49,7 @@ function CartSelectedItems() {
 
           <div className="flex flex-col justify-between items-end h-[134px] py-2">
             <span className="text-[18px] font-medium text-[#10151F]">$ {item.price}</span>
-            <button className="cursor-pointer" onClick={() => deleteItem(token ?? "", item.id, { color: item.color ?? "", size: item.size ?? "" })}>Remove</button>
+            <button type='button' className="cursor-pointer" onClick={() => deleteItem(token ?? "", item.id, { color: item.color ?? "", size: item.size ?? "" })}>Remove</button>
           </div>
         </div>))}
         </>

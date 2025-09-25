@@ -1,81 +1,34 @@
 import { ReactNode } from "react"
 
-type ButtonProps = {
-  children: React.ReactNode
-  icon?: React.ReactNode
-  src?: React.ReactNode
-  onClick?: React.MouseEventHandler<HTMLButtonElement>
-  disabled?: boolean
-  className?:string
+// =============================
+// Domain models (Products/Brand)
+// =============================
 
-}
-
-type RegisterFormValues = {
-    username: string;
-    email: string;
-    password: string;
-    password_confirmation: string;
-    avatar: File | null;
-};
-
-type Product = {
-    id: number;
-    name: string;
-    description: string;
-    release_year: string;
-    cover_image: string;
-    images: string[];
-    price: number;
-    available_colors:null | string[];
-    available_sizes:null | string[];
-    size?: string;
-    color?: string;
-    total_price?: number;
-    quantity?: number;
-}
-
-type ImageUploaderProps = {
-    name: string;
-    label?: string;
-    className?: string;
-}
-type InputProps = {
-  name: string;
-  type?: "text" | "email" | "password";
-  label: string;
-  required?: boolean;
-  className?: string;
-  rules?: Record<string, unknown>;
-}
-
-type ListingClientProps = {
-    product: {
-        data: Product[]
-        links: {
-            first?: string | null
-            last?: string | null
-            prev?: string | null
-            next?: string | null
-        }
-        meta: {
-            current_page: number
-            from: number
-            to: number
-            total: number
-            per_page: number
-        }
-    }
-    currentPage: number
-    totalPages: number
-}
-
-
+/** Brand information used across product views */
 type Brand = {
   id: number;
   name: string;
   image: string;
 };
 
+/** Simplified product used in listings and cart */
+type Product = {
+  id: number;
+  name: string;
+  description: string;
+  release_year: string;
+  cover_image: string;
+  images: string[];
+  price: number;
+  available_colors: null | string[];
+  available_sizes: null | string[];
+  size?: string;
+  color?: string;
+  total_price?: number;
+  quantity?: number;
+}
+
+/** Full product details used on the product page */
 type ProductDetailInfo = {
   id: number;
   name: string;
@@ -89,13 +42,107 @@ type ProductDetailInfo = {
   brand: Brand;
 };
 
+// =============================
+// UI component props (shared)
+// =============================
+
+/** Generic button props shared by UI buttons */
+type ButtonProps = {
+  children: ReactNode
+  icon?: ReactNode
+  src?: ReactNode
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
+  disabled?: boolean
+  className?: string
+}
+
+/** Input component props (forms) */
+type InputProps = {
+  name: string;
+  type?: "text" | "email" | "password";
+  label: string;
+  required?: boolean;
+  className?: string;
+  rules?: Record<string, unknown>;
+}
+
+/** Image uploader control props */
+type ImageUploaderProps = {
+  name: string;
+  label?: string;
+  className?: string;
+}
+
+/** Generic modal wrapper props */
 type ModalProps  ={
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
 }
 
+// =============================
+// Auth/Register forms
+// =============================
 
+/** Registration form data */
+type RegisterFormValues = {
+  username: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+  avatar: File | null;
+};
+
+// =============================
+// Listing/Pagination/Filters
+// =============================
+
+/** Server response wrapper and pagination for listing page */
+type ListingClientProps = {
+  product: {
+    data: Product[]
+    links: {
+      first?: string | null
+      last?: string | null
+      prev?: string | null
+      next?: string | null
+    }
+    meta: {
+      current_page: number
+      from: number
+      to: number
+      total: number
+      per_page: number
+    }
+  }
+  currentPage: number
+  totalPages: number
+}
+
+/** Pagination control props */
+type PaginationProps = {
+  currentPage: number
+  totalPages: number
+  links?: { first?: string | null; last?: string | null; prev?: string | null; next?: string | null }
+}
+
+/** Small removable tag for active filters */
+type SelectedTagProps = {
+  label: string;
+  onRemove: () => void;
+};
+
+/** Sort modal visibility control */
+type SortModalProps = {
+  isOpen: boolean
+  onClose: () => void
+}
+
+// =============================
+// Order/Checkout
+// =============================
+
+/** Checkout form fields */
 type CheckoutFormValues = {
   name: string;
   surname: string;
@@ -104,28 +151,38 @@ type CheckoutFormValues = {
   zip_code: string;
 };
 
-
-
-type PaginationProps = {
-  currentPage: number
-  totalPages: number
-  links?: { first?: string | null; last?: string | null; prev?: string | null; next?: string | null }
-}
-
-
-type SelectedTagProps = {
-    label: string;
-    onRemove: () => void;
-};
-
-
+/** Sidebar summary props for order */
 type OrderSideBarProps = {
   totalPrice: number;
 };
 
-type SortModalProps = {
-    isOpen: boolean
-    onClose: () => void
+/** Success message control (post-order) */
+interface SuccessMessageProps {
+  onContinue: () => void;
 }
 
-export type { ButtonProps,RegisterFormValues,Product,ImageUploaderProps,InputProps,ListingClientProps, ProductDetailInfo,ModalProps,CheckoutFormValues, PaginationProps,SelectedTagProps,OrderSideBarProps,SortModalProps}
+// =============================
+// Public exports: keep only app-wide relevant types below
+// =============================
+export type {
+  // Domain
+  Brand,
+  Product,
+  ProductDetailInfo,
+  // UI shared
+  ButtonProps,
+  InputProps,
+  ImageUploaderProps,
+  ModalProps,
+  // Auth/Register
+  RegisterFormValues,
+  // Listing
+  ListingClientProps,
+  PaginationProps,
+  SelectedTagProps,
+  SortModalProps,
+  // Order/Checkout
+  CheckoutFormValues,
+  OrderSideBarProps,
+  SuccessMessageProps,
+}

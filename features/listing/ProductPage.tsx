@@ -58,156 +58,188 @@ function ProductPage({
     router.push("/listing");
   }
 
+  console.log("activeSIZE:", activeSize);
+  console.log("activeColor:", selectedColor);
   return (
-    <div className="px-[130px]">
-    <div className="mt-18">
-      <h3 className="text-[#10151f] text-[14px]">Listing / Product</h3>
-      <div className="flex gap-[168px] mt-[49px]">
-        <div className="flex gap-6">
-          <div className="flex flex-col gap-[9px]">
-            {productDetails?.images.map((image, index) => (
+    <div className="px-[100px]">
+      <div className="mt-18">
+        <h3 className="text-[#10151f] text-[14px]">Listing / Product</h3>
+        <div className="flex gap-[168px] mt-[49px]">
+          <div className="flex gap-6">
+            <div className="flex flex-col gap-[9px]">
+              {productDetails?.images.map((image, index) => (
+                <Image
+                  key={index}
+                  src={image}
+                  width={121}
+                  height={161}
+                  className={` ${
+                    coverImage === image ? "border-[#ff4000] border" : ""
+                  } w-[121px] h-[161px] cursor-pointer shadow-md rounded-[6px]`}
+                  alt="img"
+                  onClick={() => {
+                    setCoverImage(image);
+                    const colorForImage =
+                      productDetails.available_colors[index];
+                    if (colorForImage) setSelectedColor(colorForImage);
+                  }}
+                />
+              ))}
+            </div>
+            <div>
               <Image
-                key={index}
-                src={image}
-                width={121}
-                height={161}
-                className={` ${coverImage===image?"border-[#ff4000] border":""} w-[121px] h-[161px] cursor-pointer shadow-md rounded-[6px]`}
-                alt="img"
-                onClick={() => {
-                  setCoverImage(image);
-                  const colorForImage = productDetails.available_colors[index];
-                  if (colorForImage) setSelectedColor(colorForImage);
-                }}
+                width={703}
+                height={937}
+                className="w-[703px] h-[937px] rounded-[10px] shadow-lg"
+                src={coverImage}
+                alt="cover image"
               />
-            ))}
+            </div>
           </div>
-          <div>
-            <Image
-              width={703}
-              height={937}
-              className="w-[703px] h-[937px] rounded-[10px] shadow-lg"
-              src={coverImage}
-              alt="cover image"
-            />
-          </div>
-        </div>
-        <div>
-          <h1
-            className="text-[
+          <div className="flex-1">
+            <h1
+              className="text-[
 #10151f] text-[32px] font-semibold capitalize mb-[21px]"
-          >
-            {productDetails?.name}
-          </h1>
-          <p
-            className="text-[
-#10151f] text-[32px] font-semibold"
-          >
-            $ {productDetails?.price}
-          </p>
-
-          <div className="my-14 space-y-12">
-            <div className="space-y-4">
-              <h3 className="text-[#10151f] text-[16px]">
-                Color: {selectedColor}
-              </h3>
-              <div className="flex gap-[13px] items-center">
-                {productDetails?.available_colors.map(
-                  (color: string, index: number) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        setSelectedColor(color);
-                        const imageForColor =
-                          productDetails.images[index] ??
-                          productDetails.cover_image;
-                        setCoverImage(imageForColor);
-                      }}
-                      className={`w-12 h-12 rounded-full p-1 border cursor-pointer ${
-                        selectedColor === color
-                          ? "border-[#e1dfe1] border-[1px]"
-                          : "border-gray-300 border-hidden"
-                      }`}
-                    >
-                      <div
-                        style={{ backgroundColor: color }}
-                        className="w-full h-full rounded-full"
-                      />
-                    </button>
-                  )
-                )}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-[#10151f] text-[16px]">
-                Sizes: {activeSize}
-              </h3>
-              <div className="space-x-2">
-                {productDetails?.available_sizes.map((size, index) => (
-                  <button
-                    onClick={() => setActiveSize(size)}
-                    key={index}
-                    className={`px-7 py-[9px] rounded-[10px] text-[16px] cursor-pointer border text-[#10151f] 
-  ${
-    activeSize === size ? "border-[#10151f] bg-[#f8f6f7]" : "border-[#e1dfe1]"
-  }`}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h3>Quantity</h3>
-              <div className="relative inline-block">
-                <button
-                  onClick={() => setIsOpen((prev) => !prev)}
-                  className="w-[70px] h-[42px] flex  justify-center items-center gap-[10px] px-4 py-[9px] 
-                   border border-[#e1dfe1] rounded-[10px] bg-white shadow-sm"
-                >
-                  {selectedQuantity ?? "1"}
-                  <Image
-                    src={arrowIcon}
-                    width={10}
-                    height={10}
-                    alt="arrow icon"
-                  />
-                </button>
-
-                {isOpen && (
-                  <div className="absolute left-0 top-[30px] mt-2 w-[70px] bg-white border border-[#e1dfe1] rounded-[10px] shadow-md z-10">
-                    {options.map((num) => (
-                      <div
-                        key={num}
-                        onClick={() => handleSelect(num)}
-                        className="px-3 py-2 text-center cursor-pointer hover:bg-gray-100"
-                      >
-                        {num}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <Button
-              disabled={!isLogged}
-              className="w-full"
-              onClick={handleAddToCart}
-              icon={cartIcon}
             >
-              Add to cart
-            </Button>
-          </div>
+              {productDetails?.name}
+            </h1>
+            <p
+              className="text-[
+#10151f] text-[32px] font-semibold"
+            >
+              $ {productDetails?.price}
+            </p>
 
-          <div className="w-full h-[1px] my-[56px] bg-[#e1dfe1]"></div>
-          <BrandContent productDetails={productDetails} />
+            <div className="my-14 space-y-12">
+              <div className="space-y-4">
+                <h3 className="text-[#10151f] text-[16px]">
+                  Color: {selectedColor}
+                </h3>
+                <div className="flex gap-[13px] items-center">
+                  {productDetails?.available_colors &&
+                  productDetails.available_colors.length > 0 ? (
+                    productDetails.available_colors.map(
+                      (color: string, index: number) => (
+                        <button
+                          key={index}
+                          onClick={() => {
+                            setSelectedColor(color);
+                            const imageForColor =
+                              productDetails.images[index] ??
+                              productDetails.cover_image;
+                            setCoverImage(imageForColor);
+                          }}
+                          className={`w-12 h-12 rounded-full p-1 border cursor-pointer ${
+                            selectedColor === color
+                              ? "border-[#e1dfe1] border-[1px]"
+                              : "border-gray-300 border-hidden"
+                          }`}
+                        >
+                          <div
+                            style={{
+                              background:
+                                color === "Navy Blue"
+                                  ? "#000080"
+                                  : color === "Multi"
+                                  ? "linear-gradient(to bottom, yellow 50%, purple 50%)"
+                                  : color === "Peach"
+                                  ? "#FFE5B4"
+                                  : color === "Cream"
+                                  ? "#FFFDD0"
+                                  : color,
+                            }}
+                            className="w-full h-full rounded-full"
+                          />
+                        </button>
+                      )
+                    )
+                  ) : (
+                    <p className="text-gray-400">No Available Colors</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-[#10151f] text-[16px]">
+                  Sizes: {activeSize}
+                </h3>
+                <div className="space-x-2">
+                  {productDetails?.available_sizes &&
+                  productDetails.available_sizes.length > 0 ? (
+                    productDetails.available_sizes.map(
+                      (size: string, index: number) => (
+                        <button
+                          onClick={() => setActiveSize(size)}
+                          key={index}
+                          className={`px-7 py-[9px] rounded-[10px] text-[16px] cursor-pointer border text-[#10151f] 
+        ${
+          activeSize === size
+            ? "border-[#10151f] bg-[#f8f6f7]"
+            : "border-[#e1dfe1]"
+        }`}
+                        >
+                          {size}
+                        </button>
+                      )
+                    )
+                  ) : (
+                    <p className="text-gray-400">No Available Sizes</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h3>Quantity</h3>
+                <div className="relative inline-block">
+                  <button
+                    onClick={() => setIsOpen((prev) => !prev)}
+                    className="w-[70px] h-[42px] flex  justify-center items-center gap-[10px] px-4 py-[9px] 
+                   border border-[#e1dfe1] rounded-[10px] bg-white shadow-sm"
+                  >
+                    {selectedQuantity ?? "1"}
+                    <Image
+                      src={arrowIcon}
+                      width={10}
+                      height={10}
+                      alt="arrow icon"
+                    />
+                  </button>
+
+                  {isOpen && (
+                    <div className="absolute left-0 top-[30px] mt-2 w-[70px] bg-white border border-[#e1dfe1] rounded-[10px] shadow-md z-10">
+                      {options.map((num) => (
+                        <div
+                          key={num}
+                          onClick={() => handleSelect(num)}
+                          className="px-3 py-2 text-center cursor-pointer hover:bg-gray-100"
+                        >
+                          {num}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <Button
+                disabled={
+                  !isLogged || selectedColor === "" || activeSize === ""
+                }
+                className="w-full"
+                onClick={handleAddToCart}
+                icon={cartIcon}
+              >
+                Add to cart
+              </Button>
+            </div>
+
+            <div className="w-full h-[1px] my-[56px] bg-[#e1dfe1]"></div>
+            <BrandContent productDetails={productDetails} />
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

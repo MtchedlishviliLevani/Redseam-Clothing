@@ -18,7 +18,6 @@ function Cart() {
   } = useCartStore();
 
 
-  console.log(cartItems)
   useEffect(() => {
     if (token) {
       fetchCart(token);

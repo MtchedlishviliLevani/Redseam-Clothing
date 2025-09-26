@@ -156,28 +156,56 @@ interface SuccessMessageProps {
   onContinue: () => void;
 }
 
+
+// ======
+// Global states and function
+// ======
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  avatar: string;
+}
+
+interface AuthState {
+  user: User | null;
+  isLogged: boolean;
+  token: string | null;
+  setUser: (user: User) => void;
+  setToken: (token: string) => void;
+}
+
+
+interface Cart{
+    isOpenCartModal: boolean;
+    closeCartModal: () => void;
+    openCartModal: () => void;
+    cartItems: Product[];
+  fetchCart: (token: string) => Promise<void>;
+  increaseQuantity: (token:string,id: number,color:string,size:string) => Promise<void>;
+  decreaseQuantity: (token:string,id: number,color:string,size:string) => Promise<void>;
+  deleteItem: (token: string, id: number,data:{color:string,size:string}) => Promise<void>;
+  clearCart: () => void;
+}
+
 // =============================
 // Public exports: keep only app-wide relevant types below
 // =============================
 export type {
-  // Domain
   Brand,
   Product,
   ProductDetailInfo,
-  // UI shared
   InputProps,
   OrderInputProps,
   ImageUploaderProps,
   ModalProps,
-  // Auth/Register
   RegisterFormValues,
-  // Listing
   ListingClientProps,
   PaginationProps,
   SelectedTagProps,
   SortModalProps,
-  // Order/Checkout
   CheckoutFormValues,
   OrderSideBarProps,
   SuccessMessageProps,
+  User,AuthState,Cart
 }
